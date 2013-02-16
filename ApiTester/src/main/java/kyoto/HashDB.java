@@ -7,11 +7,11 @@ import kyotocabinet.DB;
  * 20:17
  */
 public class HashDB extends AbstractDB {
-    @Override
-    public boolean open(String s, int i) {
-        if(s == null){
-            return false;
-        }
-        return super.open(s + ".kch", i);
+    public HashDB() {
+        init = "test.kch";
+    }
+
+    public HashDB(String s){
+        init = s;
     }
 }
