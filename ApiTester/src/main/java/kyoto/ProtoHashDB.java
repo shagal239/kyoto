@@ -1,7 +1,5 @@
 package kyoto;
 
-import kyotocabinet.DB;
-
 /**
  * Arkady Shagal
  * 20:15
@@ -11,7 +9,7 @@ public class ProtoHashDB extends AbstractDB {
         init = "-";
     }
 
-    public ProtoHashDB(String s){
+    public ProtoHashDB(String s) {
         init = s;
     }
 }

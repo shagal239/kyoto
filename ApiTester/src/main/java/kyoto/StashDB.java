@@ -1,7 +1,5 @@
 package kyoto;
 
-import kyotocabinet.DB;
-
 /**
  * Arkady Shagal
  * 20:15
@@ -11,7 +9,7 @@ public class StashDB extends AbstractDB {
         init = ":";
     }
 
-    public StashDB(String s){
+    public StashDB(String s) {
         init = s;
     }
 }

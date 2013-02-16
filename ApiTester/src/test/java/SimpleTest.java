@@ -1,13 +1,10 @@
 import kyoto.*;
-import kyotocabinet.DB;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import utils.ByteUtils;
 import utils.IConnector;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
 
 /**
  * Arkady Shagal
@@ -15,28 +12,29 @@ import static junit.framework.Assert.assertTrue;
  */
 
 public class SimpleTest {
-    private IConnector connector;
+    private IConnector connector1;
+    private IConnector connector2;
+    private IConnector connector3;
+
     @Before
     public void before() throws Exception {
-        connector = new KyotoConnector(new CashDB());
-
+        connector1 = new HashDB();
+        connector2 = new HashDB("test2.kch#" + DBPool.tune_buckets1 + "#" + DBPool.page_cache + "#" + DBPool.tune_map2);
+        connector3 = new CashDB();
     }
 
     @Test
     public void test() throws Exception {
-        int[] sizes = {(int) 10e10};
-        for (int i : sizes) {
-                new TestCase1(new KyotoConnector(DBPool.hashdb), i).run();
-        }
+        new TestCase1(connector1).run();
+        new TestCase1(connector2).run();
+        new TestCase1(connector3).run();
     }
 
 
     @After
     public void after() throws Exception {
-        connector.close();
+
     }
-
-
 }
 
 

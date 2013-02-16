@@ -1,4 +1,3 @@
-import kyoto.KyotoConnector;
 import kyoto.StashDB;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,7 +18,7 @@ public class ConcurrentTest {
     IConnector connector;
     @Before
     public void before() throws Exception {
-        connector = new KyotoConnector(new StashDB());
+        connector = new StashDB();
     }
 
     @Test

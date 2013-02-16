@@ -10,47 +10,46 @@ import java.util.Set;
  * Arkady Shagal
  * 9:52
  */
-public class KyotoConnector extends AbstractDB implements IConnector {
-    private String init;
+public class KyotoConnector implements IConnector {
+    public KyotoConnector() {
+        db = new DB();
+    }
 
-    public String getDBName() {
-        return db.getClass().getSimpleName();
+    public DB getDb() {
+        return db;
     }
 
     private DB db;
 
     public KyotoConnector(DB db) throws Exception {
         this.db = db;
-
-        if(!db.open("%", DB.OWRITER | DB.OCREATE | DB.OAUTOTRAN)){
-            throw new Exception("not opened");
-        }
     }
 
 
-    public long getCount(){
+    public long getCount() {
         return db.count();
     }
+
     @Override
-    public void insertData(String id, byte[] data) throws InterruptedException, Exception {
-        if(db.set(id.getBytes(), data)){
+    public void insertData(String id, byte[] data) throws Exception {
+        if (db.set(id.getBytes(), data)) {
             throw new Exception("not inserted");
         }
     }
 
     @Override
-    public void insertData(byte[] id, byte[] data) throws InterruptedException, Exception {
+    public void insertData(byte[] id, byte[] data) throws Exception {
         boolean res = db.begin_transaction(false);
-        if(!db.set(id, data)){
+        if (!db.set(id, data)) {
             throw new Exception("not inserted");
         }
         db.end_transaction(res);
     }
 
     @Override
-    public byte[] getData(String id) throws InterruptedException, Exception {
+    public byte[] getData(String id) throws Exception {
         byte[] result = db.get(id.getBytes());
-        if(result != null){
+        if (result != null) {
             return result;
         } else {
             throw new Exception("not returned");
@@ -58,9 +57,9 @@ public class KyotoConnector extends AbstractDB implements IConnector {
     }
 
     @Override
-    public byte[] getData(byte[] id) throws InterruptedException, Exception {
+    public byte[] getData(byte[] id) throws Exception {
         byte[] result = db.get(id);
-        if(result != null){
+        if (result != null) {
             return result;
         } else {
             throw new Exception("not returned");
@@ -68,26 +67,26 @@ public class KyotoConnector extends AbstractDB implements IConnector {
     }
 
     @Override
-    public boolean deleteById(String id) throws InterruptedException, Exception {
-        if(!db.remove(id.getBytes())){
+    public boolean deleteById(String id) throws Exception {
+        if (!db.remove(id.getBytes())) {
             throw new Exception("not removed");
         }
         return true;
     }
 
     @Override
-    public boolean deleteById(byte[] id) throws InterruptedException, Exception {
+    public boolean deleteById(byte[] id) throws Exception {
         boolean start = db.begin_transaction(true);
         db.remove(id);
         return db.end_transaction(start);
     }
 
     @Override
-    public Set<byte[]> getAllData(byte[][] ids) throws Exception, InterruptedException {
+    public Set<byte[]> getAllData(byte[][] ids) throws Exception {
         byte[][] result = db.get_bulk(ids, true);
         if (result != null) {
             Set<byte[]> set = new HashSet<byte[]>();
-            for(byte[] bytes : result){
+            for (byte[] bytes : result) {
                 set.add(bytes);
             }
             return set;
@@ -97,17 +96,12 @@ public class KyotoConnector extends AbstractDB implements IConnector {
     }
 
     @Override
-    public void truncate() throws InterruptedException, Exception {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public boolean open(String s, int i) {
-        return super.open(s, i);
+    public void truncate() throws Exception {
+        return;
     }
 
     @Override
     public boolean close() {
-       return db.close();
+        return db.close();
     }
 }

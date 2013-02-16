@@ -1,7 +1,5 @@
 package kyoto;
 
-import kyotocabinet.DB;
-
 /**
  * Arkady Shagal
  * 20:05
@@ -11,7 +9,7 @@ public class CashDB extends AbstractDB {
         init = "*";
     }
 
-    public CashDB(String s){
+    public CashDB(String s) {
         init = s;
     }
 }

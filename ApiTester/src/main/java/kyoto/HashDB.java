@@ -1,6 +1,5 @@
 package kyoto;
 
-import kyotocabinet.DB;
 
 /**
  * Arkady Shagal
@@ -8,10 +7,10 @@ import kyotocabinet.DB;
  */
 public class HashDB extends AbstractDB {
     public HashDB() {
-        init = "test.kch";
+        setInit("test.kch");
     }
 
-    public HashDB(String s){
-        init = s;
+    public HashDB(String s) {
+        setInit(s);
     }
 }

@@ -1,7 +1,5 @@
 package kyoto;
 
-import kyotocabinet.DB;
-
 /**
  * Arkady Shagal
  * 20:16
@@ -11,7 +9,7 @@ public class GrassDB extends AbstractDB {
         init = "%";
     }
 
-    public GrassDB(String s){
+    public GrassDB(String s) {
         init = s;
     }
 }
