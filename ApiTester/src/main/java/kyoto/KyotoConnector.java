@@ -1,6 +1,7 @@
 package kyoto;
 
 import kyotocabinet.DB;
+import utils.ByteUtils;
 import utils.IConnector;
 
 import java.util.HashSet;
@@ -40,10 +41,8 @@ public class KyotoConnector implements IConnector {
     @Override
     public void insertData(byte[] id, byte[] data) throws Exception {
         boolean res = db.begin_transaction(false);
-        if (!db.set(id, data)) {
-            throw new Exception("not inserted");
-        }
-        db.end_transaction(res);
+        boolean res2 = db.set(id, data);
+        db.end_transaction(res && res2);
     }
 
     @Override
@@ -58,26 +57,20 @@ public class KyotoConnector implements IConnector {
 
     @Override
     public byte[] getData(byte[] id) throws Exception {
-        byte[] result = db.get(id);
-        if (result != null) {
-            return result;
-        } else {
-            throw new Exception("not returned");
-        }
+        return db.get(id);
     }
 
     @Override
     public boolean deleteById(String id) throws Exception {
-        if (!db.remove(id.getBytes())) {
-            throw new Exception("not removed");
-        }
-        return true;
+        boolean res = db.begin_transaction(false);
+        db.remove(id.getBytes());
+        return db.end_transaction(res);
     }
 
     @Override
     public boolean deleteById(byte[] id) throws Exception {
-        boolean start = db.begin_transaction(true);
-        db.remove(id);
+        boolean start = db.begin_transaction(false);
+        db.seize(id);
         return db.end_transaction(start);
     }
 

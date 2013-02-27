@@ -65,7 +65,7 @@ public class ByteUtils {
                 ((long) (bytes[position] & 0xFF));
     }
 
-    public static byte[] toBytes(long value) {
+    public static synchronized byte[] toBytes(long value) {
         ByteBuffer buf = ByteBuffer.allocate(8);
         buf.putLong(value);
         buf.flip();
@@ -82,7 +82,7 @@ public class ByteUtils {
         return bytes;  */
     }
 
-    public static long toLong(byte[] bytes) {
+    public static synchronized long toLong(byte[] bytes) {
         ByteBuffer buf = ByteBuffer.allocate(bytes.length);
         buf.put(bytes);
         buf.flip();
