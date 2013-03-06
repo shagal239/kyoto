@@ -1,9 +1,11 @@
 package kyoto;
 
+import kyotocabinet.Cursor;
 import kyotocabinet.DB;
 import utils.ByteUtils;
 import utils.IConnector;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -86,6 +88,22 @@ public class KyotoConnector implements IConnector {
         } else {
             throw new Exception("fail");
         }
+    }
+
+    @Override
+    public Set<byte[]> selectRange(byte[] start, byte[] finish) throws Exception {
+        Cursor cursor = new Cursor(db);
+        cursor.jump(start);
+        Set<byte[]> res = new HashSet<byte[]>();
+        res.add(cursor.get_value(true));
+        while(true){
+
+            if(Arrays.equals(cursor.get_key(false), finish)){
+                break;
+            }
+            res.add(cursor.get_value(true));
+        }
+        return res;
     }
 
     @Override

@@ -8,21 +8,24 @@ import java.util.Set;
 public interface IConnector {
 
     long getCount();
-    void insertData(String id, byte[] data) throws InterruptedException, Exception;
 
-    void insertData(byte[] id, byte[] data) throws InterruptedException, Exception;
+    void insertData(String id, byte[] data) throws Exception;
 
-    byte[] getData(String id) throws InterruptedException, Exception;
+    void insertData(byte[] id, byte[] data) throws Exception;
 
-    byte[] getData(byte[] id) throws InterruptedException, Exception;
+    byte[] getData(String id) throws Exception;
 
-    boolean deleteById(String id) throws InterruptedException, Exception;
+    byte[] getData(byte[] id) throws Exception;
 
-    boolean deleteById(byte[] id) throws InterruptedException, Exception;
+    boolean deleteById(String id) throws Exception;
 
-    Set<byte[]> getAllData(byte[][] ids) throws Exception, InterruptedException;
+    boolean deleteById(byte[] id) throws Exception;
 
-    void truncate() throws InterruptedException, Exception;
+    Set<byte[]> getAllData(byte[][] ids) throws Exception;
+
+    Set<byte[]> selectRange(byte[] start, byte[] finish) throws Exception;
+
+    void truncate() throws Exception;
 
     boolean close() throws Exception;
 }
